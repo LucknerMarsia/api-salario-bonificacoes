@@ -12,6 +12,7 @@ import java.time.YearMonth;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FuncionarioSalarioDto {
+
     private YearMonth mesAno;
     private String nome;
     private double salario;
