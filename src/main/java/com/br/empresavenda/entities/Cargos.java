@@ -1,5 +1,6 @@
 package com.br.empresavenda.entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,7 +19,8 @@ public class Cargos {
     @Column
     private double bonusano;
     @Column
-    private int beneficios;
+    @Nullable
+    private Integer beneficios;
 
 
 }

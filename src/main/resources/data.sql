@@ -9,8 +9,16 @@ INSERT INTO FUNCIONARIOS (nome, cargo_id, contratacao) values ('João Mendes', 2
 INSERT INTO FUNCIONARIOS (nome, cargo_id, contratacao) values ('Juliana Alves', 3, '2017-07-10');
 INSERT INTO FUNCIONARIOS (nome, cargo_id, contratacao) values ('Bento Albino', 3, '2014-03-18');
 
-INSERT INTO VENDAS (vendedor_id, data, valor) values (3, '2014-03-18', 5200.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (3, '2021-12-18', 5200.00);
 INSERT INTO VENDAS (vendedor_id, data, valor) values (4, '2021-12-18', 3400.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (3, '2022-01-30', 4000.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (4, '2022-01-30', 7700.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (3, '2022-02-28', 4200.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (4, '2022-02-28', 5000.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (3, '2022-03-30', 5850.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (4, '2022-03-30', 5900.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (3, '2022-04-30', 7000.00);
+INSERT INTO VENDAS (vendedor_id, data, valor) values (4, '2022-04-30', 6500.00);
 
 
 
