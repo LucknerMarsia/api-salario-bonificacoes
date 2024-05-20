@@ -20,7 +20,7 @@ public class Cargos {
     private double bonusano;
     @Column
     @Nullable
-    private Integer beneficios;
+    private double beneficios;
 
 
 }

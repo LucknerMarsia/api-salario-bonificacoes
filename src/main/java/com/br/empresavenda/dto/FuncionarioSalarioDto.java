@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.YearMonth;
 
 @Data
@@ -15,5 +16,5 @@ public class FuncionarioSalarioDto {
 
     private YearMonth mesAno;
     private String nome;
-    private double salario;
+    private BigDecimal salario;
 }

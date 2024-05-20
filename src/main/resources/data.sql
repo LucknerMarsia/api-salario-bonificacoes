@@ -1,6 +1,6 @@
-INSERT INTO CARGOS (funcao, salario, bonusano, beneficios) values ('Secretario', 5000.00, 1000.00, 20);
+INSERT INTO CARGOS (funcao, salario, bonusano, beneficios) values ('Secretario', 7000.00, 1000.00, 20);
 INSERT INTO CARGOS (funcao, salario, bonusano, beneficios) values ('Vendedor', 12000.00, 1800.00, 30);
-INSERT INTO CARGOS (funcao, salario, bonusano, beneficios) values ('Gerente', 20000.00, 3000.00, null);
+INSERT INTO CARGOS (funcao, salario, bonusano, beneficios) values ('Gerente', 20000.00, 3000.00, 0.0);
 
 INSERT INTO FUNCIONARIOS (nome, cargo_id, contratacao) values ('Jorge Carvalho', 1, '2018-01-01');
 INSERT INTO FUNCIONARIOS (nome, cargo_id, contratacao) values ('Maria Souza', 1, '2015-12-01');
