@@ -31,4 +31,12 @@ public class FuncionariosController {
     }
 
 
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation("Salários no mês")
+    @GetMapping("/listarsalariomes")
+    public List<FuncionarioSalarioDto> listaSalarioMes(){
+        return service.listaSalarioMes();
+    }
+
+
 }

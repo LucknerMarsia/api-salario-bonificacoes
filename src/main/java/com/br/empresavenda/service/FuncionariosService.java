@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,5 +59,22 @@ public class FuncionariosService {
             }
         }
         return BigDecimal.valueOf(0.00);
+    }
+
+    public List<FuncionarioSalarioDto> listaSalarioMes() {
+        return repository.findAll().stream()
+                .map(FuncionariosResponseMapper::fromEntityToResponse)
+                .map(funcionarioDto -> new FuncionarioSalarioDto(
+                        ConverterData.converterDataParaMesAno(funcionarioDto.getContratacao()),
+                        "Total Salário",
+                        BigDecimal.valueOf(funcionarioDto.getCargo().getSalario())
+                ))
+                .collect(Collectors.groupingBy(FuncionarioSalarioDto::getMesAno,
+                        TreeMap::new, Collectors.reducing(BigDecimal.ZERO,
+                                FuncionarioSalarioDto::getSalario,
+                                BigDecimal::add)))
+                .entrySet().stream()
+                .map(entry -> new FuncionarioSalarioDto(entry.getKey(), "Total Salário", entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
