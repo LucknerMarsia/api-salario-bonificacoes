@@ -4,6 +4,7 @@ import com.br.empresavenda.entities.Cargos;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @Builder

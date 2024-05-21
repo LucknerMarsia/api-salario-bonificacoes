@@ -2,7 +2,6 @@ package com.br.empresavenda.service;
 
 import com.br.empresavenda.dto.FuncionarioSalarioDto;
 import com.br.empresavenda.dto.FuncionariosDto;
-import com.br.empresavenda.entities.Cargos;
 import com.br.empresavenda.mapper.FuncionariosResponseMapper;
 import com.br.empresavenda.repository.FuncionariosRepository;
 import com.br.empresavenda.utils.ConverterData;
@@ -10,9 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,14 +30,15 @@ public class FuncionariosService {
 
         List<FuncionarioSalarioDto> listaFuncionariosSalario = new ArrayList<>();
 
-        for (FuncionariosDto funcionarioDto : funcionariosLista) {
-            var totalSalario =
-                    getBeneficiosPorcentage(funcionarioDto.getCargo());
+
+        for (FuncionariosDto funcionariosDto : funcionariosLista) {
+            var totalSalario = getBeneficiosPorcentage(funcionariosDto);
+                    getBeneficiosPorcentage(funcionariosDto);
 
 
             var funcionarioSalarioDto = FuncionarioSalarioDto.builder()
-                    .mesAno(ConverterData.converterDataParaMesAno(funcionarioDto.getContratacao()))
-                    .nome(funcionarioDto.getNome())
+                    .mesAno(ConverterData.converterDataParaMesAno(funcionariosDto.getContratacao()))
+                    .nome(funcionariosDto.getNome())
                     .salario(totalSalario)
                     .build();
 
@@ -46,15 +47,21 @@ public class FuncionariosService {
         return listaFuncionariosSalario;
     }
 
-    private BigDecimal getBeneficiosPorcentage(Cargos cargo) {
-        if (cargo.getBeneficios() != 0.0) {
-            var salario = cargo.getSalario() + cargo.getBonusano();
-            var percentual = cargo.getBeneficios() / 100.0;
+    private BigDecimal getBeneficiosPorcentage(FuncionariosDto funcionariosDto) {
+
+        if (funcionariosDto.getCargo().getBeneficios() != 0.0) {
+
+            LocalDate dataContratacao = funcionariosDto.getContratacao().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate();
+
+            var bonus = periodoEntreDatas(dataContratacao) * funcionariosDto.getCargo().getBonusano();
+            var salario = funcionariosDto.getCargo().getSalario() + bonus;
+            var percentual = funcionariosDto.getCargo().getBeneficios() / 100.0;
             var totalSalario =  salario + (percentual * salario);
             return BigDecimal.valueOf(totalSalario).setScale(2, BigDecimal.ROUND_HALF_UP);//return (cargo.getSalario() + cargo.getBonusano()) /(cargo.getBeneficios() * 100);
         }else{
-            if(cargo.getFuncao().equals("Gerente")){
-                var salario = cargo.getSalario() + cargo.getBonusano();
+            if(funcionariosDto.getCargo().getFuncao().equals("Gerente")){
+                var salario = funcionariosDto.getCargo().getSalario() + funcionariosDto.getCargo().getBonusano();
                 return BigDecimal.valueOf(salario).setScale(2, BigDecimal.ROUND_HALF_UP);
             }
         }
@@ -76,5 +83,11 @@ public class FuncionariosService {
                 .entrySet().stream()
                 .map(entry -> new FuncionarioSalarioDto(entry.getKey(), "Total Salário", entry.getValue()))
                 .collect(Collectors.toList());
+    }
+   public static int periodoEntreDatas(LocalDate dataInicial) {
+        LocalDate dataFinal = LocalDate.now();
+        var periodo = Period.between(dataInicial, dataFinal);
+
+        return periodo.getYears();
     }
 }
