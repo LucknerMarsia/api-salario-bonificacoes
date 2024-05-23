@@ -22,6 +22,7 @@ public class FuncionariosController {
 
 
     private final FuncionariosService service;
+    private final FuncionariosService funcionarioService;
 
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation("Lista os funcionários")
@@ -36,6 +37,13 @@ public class FuncionariosController {
     @GetMapping("/listarsalariomes")
     public List<FuncionarioSalarioDto> listaSalarioMes(){
         return service.listaSalarioMes();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation("Lista os beneficios")
+    @GetMapping(value = "/beneficios",produces = APPLICATION_JSON_VALUE)
+    public List<FuncionarioSalarioDto> listBeneficios() {
+        return funcionarioService.calcularTotalBeneficios();
     }
 
 
